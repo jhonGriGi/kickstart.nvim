@@ -20,6 +20,19 @@ return {
           ['\\'] = 'close_window',
         },
       },
+      filtered_items = {
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        hide_hidden = false,
+      },
+    },
+    event_handlers = {
+      {
+        event = 'file_open_requested',
+        handler = function()
+          require('neo-tree.command').execute { action = 'close' }
+        end,
+      },
     },
   },
 }
