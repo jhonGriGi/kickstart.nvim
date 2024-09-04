@@ -119,6 +119,7 @@ vim.schedule(function()
 end)
 
 -- Enable break indent
+vim.opt.colorcolumn = '80'
 vim.opt.breakindent = true
 
 -- Save undo history
@@ -255,19 +256,40 @@ require('lazy').setup({
       },
     },
   },
+  -- {
+  --   'sainnhe/gruvbox-material',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- Optionally configure and load the colorscheme
+  --     -- directly inside the plugin declaration.
+  --     vim.g.gruvbox_material_foreground = 'material'
+  --     vim.g.gruvbox_material_background = 'hard'
+  --     vim.g.gruvbox_material_enable_italic = true
+  --     vim.cmd.colorscheme 'gruvbox-material'
+  --   end,
+  -- },
   {
-    'craftzdog/solarized-osaka.nvim',
-    lazy = true,
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
-    opts = function()
-      return {
-        transparent = true,
-      }
-    end,
-    init = function()
-      vim.cmd.colorscheme 'solarized-osaka'
+    config = function()
+      vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
   },
+  -- {
+  --   'craftzdog/solarized-osaka.nvim',
+  --   lazy = true,
+  --   priority = 1000,
+  --   opts = function()
+  --     return {
+  --       transparent = true,
+  --     }
+  --   end,
+  --   init = function()
+  --     vim.cmd.colorscheme 'solarized-osaka'
+  --   end,
+  -- },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
