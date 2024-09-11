@@ -121,6 +121,7 @@ end)
 -- Enable break indent
 vim.opt.colorcolumn = '80'
 vim.opt.breakindent = true
+vim.o.shiftwidth = 4
 
 -- Save undo history
 vim.opt.undofile = true
@@ -269,12 +270,18 @@ require('lazy').setup({
   --     vim.cmd.colorscheme 'gruvbox-material'
   --   end,
   -- },
+  -- {
+  --   'catppuccin/nvim',
+  --   name = 'catppuccin',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'catppuccin-macchiato'
+  --   end,
+  -- },
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
+    'nyoom-engineering/oxocarbon.nvim',
     config = function()
-      vim.cmd.colorscheme 'catppuccin-macchiato'
+      vim.cmd.colorscheme 'oxocarbon'
     end,
   },
   -- {
