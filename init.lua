@@ -165,6 +165,14 @@ vim.opt.scrolloff = 10
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<leader>x', ':wq<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>a', function()
+  local line = vim.api.nvim_get_current_line()
+  if not line:match ';$' then
+    vim.cmd 'normal! A;'
+    vim.cmd 'write' -- save file
+  end
+end, { noremap = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -205,6 +213,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+vim.diagnostic.config {
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+}
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -264,12 +280,25 @@ require('lazy').setup({
   --   config = function()
   --     -- Optionally configure and load the colorscheme
   --     -- directly inside the plugin declaration.
-  --     vim.g.gruvbox_material_foreground = 'material'
+  --     vim.g.gruvbox_material_foreground = 'original'
   --     vim.g.gruvbox_material_background = 'hard'
   --     vim.g.gruvbox_material_enable_italic = true
   --     vim.cmd.colorscheme 'gruvbox-material'
   --   end,
   -- },
+  {
+    'gmr458/vscode_modern_theme.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('vscode_modern').setup {
+        cursorline = true,
+        transparent_background = false,
+        nvim_tree_darker = true,
+      }
+      vim.cmd.colorscheme 'vscode_modern'
+    end,
+  },
   -- {
   --   'catppuccin/nvim',
   --   name = 'catppuccin',
@@ -290,7 +319,7 @@ require('lazy').setup({
   --   priority = 1000,
   --   opts = function()
   --     return {
-  --       transparent = true,
+  --       transparent = false,
   --     }
   --   end,
   --   init = function()
@@ -754,7 +783,7 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -815,9 +844,9 @@ require('lazy').setup({
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
           -- Select the [n]ext item
-          ['<C-n>'] = cmp.mapping.select_next_item(),
+          -- ['<C-n>'] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          -- ['<C-p>'] = cmp.mapping.select_prev_item(),
 
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -875,68 +904,75 @@ require('lazy').setup({
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      local transparent = true -- set to true if you would like to enable transparency
-
-      local bg = '#011628'
-      local bg_dark = '#011423'
-      local bg_highlight = '#143652'
-      local bg_search = '#0A64AC'
-      local bg_visual = '#275378'
-      local fg = '#CBE0F0'
-      local fg_dark = '#B4D0E9'
-      local fg_gutter = '#627E97'
-      local border = '#547998'
-
-      require('tokyonight').setup {
-        style = 'night',
-        transparent = transparent,
-        styles = {
-          sidebars = transparent and 'transparent' or 'dark',
-          floats = transparent and 'transparent' or 'dark',
-        },
-        on_colors = function(colors)
-          colors.bg = bg
-          colors.bg_dark = transparent and colors.none or bg_dark
-          colors.bg_float = transparent and colors.none or bg_dark
-          colors.bg_highlight = bg_highlight
-          colors.bg_popup = bg_dark
-          colors.bg_search = bg_search
-          colors.bg_sidebar = transparent and colors.none or bg_dark
-          colors.bg_statusline = transparent and colors.none or bg_dark
-          colors.bg_visual = bg_visual
-          colors.border = border
-          colors.fg = fg
-          colors.fg_dark = fg_dark
-          colors.fg_float = fg
-          colors.fg_gutter = fg_gutter
-          colors.fg_sidebar = fg_dark
-        end,
-      }
-
-      vim.cmd 'colorscheme tokyonight'
-    end,
-    init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-
-      -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
-    end,
-  },
+  -- { -- You can easily change to a different colorscheme.
+  -- Change the name of the colorscheme plugin below, and then
+  -- change the command in the config to whatever the name of that colorscheme is.
+  --
+  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   config = function()
+  --     local transparent = true -- set to true if you would like to enable transparency
+  --
+  --     local bg = '#011628'
+  --     local bg_dark = '#011423'
+  --     local bg_highlight = '#143652'
+  --     local bg_search = '#0A64AC'
+  --     local bg_visual = '#275378'
+  --     local fg = '#CBE0F0'
+  --     local fg_dark = '#B4D0E9'
+  --     local fg_gutter = '#627E97'
+  --     local border = '#547998'
+  --
+  --     require('tokyonight').setup {
+  --       style = 'night',
+  --       transparent = transparent,
+  --       styles = {
+  --         sidebars = transparent and 'transparent' or 'dark',
+  --         floats = transparent and 'transparent' or 'dark',
+  --       },
+  --       on_colors = function(colors)
+  --         colors.bg = bg
+  --         colors.bg_dark = transparent and colors.none or bg_dark
+  --         colors.bg_float = transparent and colors.none or bg_dark
+  --         colors.bg_highlight = bg_highlight
+  --         colors.bg_popup = bg_dark
+  --         colors.bg_search = bg_search
+  --         colors.bg_sidebar = transparent and colors.none or bg_dark
+  --         colors.bg_statusline = transparent and colors.none or bg_dark
+  --         colors.bg_visual = bg_visual
+  --         colors.border = border
+  --         colors.fg = fg
+  --         colors.fg_dark = fg_dark
+  --         colors.fg_float = fg
+  --         colors.fg_gutter = fg_gutter
+  --         colors.fg_sidebar = fg_dark
+  --       end,
+  --     }
+  --
+  --     vim.cmd 'colorscheme tokyonight'
+  --   end,
+  --   init = function()
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-night'
+  --
+  --     -- You can configure highlights by doing something like:
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
+  {
+    'ray-x/lsp_signature.nvim',
+    event = 'InsertEnter',
+    opts = {
+      -- cfg options
+    },
+  },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
