@@ -776,7 +776,22 @@ require('lazy').setup({
       --
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
+      local ensure_installed = vim.tbl_keys(servers or {
+        'cfn-lint',
+        'css-lsp cssls',
+        'css-variables-language-server css_variables',
+        'cssmodules-language-server cssmodules_ls',
+        'eslint-lsp eslint',
+        'lua-language-server lua_ls',
+        'prettier',
+        'stylelint',
+        'stylelint-lsp stylelint_lsp',
+        'stylua',
+        'typescript-language-server ts_ls',
+        'clangd',
+        'golangci-lint',
+        'golangci-lint-langserver',
+      })
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
@@ -835,12 +850,18 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
-        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        html = { 'prettierd', 'prettier', stop_after_first = true },
-        css = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'prettier', stop_after_first = true },
+        typescript = { 'prettier', stop_after_first = true },
+        javascriptreact = { 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettier', stop_after_first = true },
+        svelte = { 'prettier', stop_after_first = true },
+        json = { 'prettier', stop_after_first = true },
+        yaml = { 'prettier', stop_after_first = true },
+        markdown = { 'prettier', stop_after_first = true },
+        graphql = { 'prettier', stop_after_first = true },
+        python = { 'isort', 'black' },
+        html = { 'prettier', stop_after_first = true },
+        css = { 'prettier', stop_after_first = true },
       },
     },
   },
