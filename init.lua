@@ -303,6 +303,13 @@ require('lazy').setup({
       },
     },
   },
+  {
+    'rmagatti/auto-session',
+    lazy = false,
+    opts = {
+      enable = true,
+    },
+  },
   -- {
   --   'sainnhe/gruvbox-material',
   --   lazy = false,
@@ -786,25 +793,27 @@ require('lazy').setup({
       --
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {
-        'cfn-lint',
-        'css-lsp cssls',
-        'css-variables-language-server css_variables',
-        'cssmodules-language-server cssmodules_ls',
-        'eslint-lsp eslint',
-        'lua-language-server lua_ls',
+      local ensure_installed = vim.tbl_keys(servers)
+      local extra_servers = {
+        'css-lsp',
+        'css-variables-language-server',
+        'cssmodules-language-server',
+        'eslint-lsp',
+        'html-lsp',
+        'lua-language-server',
         'prettier',
         'stylelint',
-        'stylelint-lsp stylelint_lsp',
+        'stylelint-lsp',
         'stylua',
-        'typescript-language-server ts_ls',
+        'typescript-language-server',
         'clangd',
         'golangci-lint',
+        'gopls',
         'golangci-lint-langserver',
-      })
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-      })
+        'sqls',
+        'sql-formatter',
+      }
+      vim.list_extend(ensure_installed, extra_servers)
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
@@ -860,18 +869,18 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { 'prettier', stop_after_first = true },
-        typescript = { 'prettier', stop_after_first = true },
-        javascriptreact = { 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettier', stop_after_first = true },
-        svelte = { 'prettier', stop_after_first = true },
+        javascript = { 'eslint', stop_after_first = true },
+        typescript = { 'eslint', stop_after_first = true },
+        javascriptreact = { 'eslint', stop_after_first = true },
+        typescriptreact = { 'eslint', stop_after_first = true },
+        svelte = { 'eslint', stop_after_first = true },
         json = { 'prettier', stop_after_first = true },
         yaml = { 'prettier', stop_after_first = true },
         markdown = { 'prettier', stop_after_first = true },
         graphql = { 'prettier', stop_after_first = true },
         python = { 'isort', 'black' },
         html = { 'prettier', stop_after_first = true },
-        css = { 'prettier', stop_after_first = true },
+        css = { 'stylelint', 'prettier', stop_after_first = false },
       },
     },
   },
