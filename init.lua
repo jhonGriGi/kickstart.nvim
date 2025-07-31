@@ -310,6 +310,65 @@ require('lazy').setup({
       enable = true,
     },
   },
+  {
+    'catppuccin/nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup {
+        integrations = {
+          blink_cmp = true,
+          fidget = true,
+          gitsigns = true,
+          harpoon = true,
+          indent_blankline = {
+            enabled = false,
+            scope_color = 'sapphire',
+            colored_indent_levels = false,
+          },
+          mason = true,
+          native_lsp = { enabled = true },
+          noice = true,
+          notify = true,
+          symbols_outline = true,
+          snacks = {
+            enabled = true,
+            indent_scope_color = 'mauve',
+          },
+          telescope = true,
+          treesitter = true,
+          treesitter_context = true,
+        },
+      }
+      local palette = require('catppuccin.palettes').get_palette 'macchiato'
+
+      vim.cmd.colorscheme 'catppuccin-macchiato'
+
+      vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = palette.base })
+      vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { fg = palette.blue })
+      vim.api.nvim_set_hl(0, 'BlinkCmpDoc', { bg = palette.base })
+      vim.api.nvim_set_hl(0, 'BlinkCmpDocBorder', { fg = palette.blue })
+      vim.api.nvim_set_hl(0, 'BlinkCmpSignatureHelp', { bg = palette.base })
+      vim.api.nvim_set_hl(0, 'BlinkCmpSignatureHelpBorder', { fg = palette.blue })
+      vim.api.nvim_set_hl(0, 'BlinkCmpDocSeparator', { fg = palette.blue, bg = palette.base })
+      vim.api.nvim_set_hl(0, 'BlinkCmpGhostText', { fg = palette.overlay2 })
+
+      -- Telescope highlights to match editor background
+      vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = palette.base })
+      vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = palette.blue, bg = palette.base })
+      vim.api.nvim_set_hl(0, 'TelescopePromptNormal', { bg = palette.base })
+      vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { fg = palette.blue, bg = palette.base })
+      vim.api.nvim_set_hl(0, 'TelescopeResultsNormal', { bg = palette.base })
+      vim.api.nvim_set_hl(0, 'TelescopeResultsBorder', { fg = palette.blue, bg = palette.base })
+      vim.api.nvim_set_hl(0, 'TelescopePreviewNormal', { bg = palette.base })
+      vim.api.nvim_set_hl(0, 'TelescopePreviewBorder', { fg = palette.blue, bg = palette.base })
+
+      -- Hide all semantic highlights until upstream issues are resolved (https://github.com/catppuccin/nvim/issues/480)
+      for _, group in ipairs(vim.fn.getcompletion('@lsp', 'highlight')) do
+        vim.api.nvim_set_hl(0, group, {})
+      end
+    end,
+  },
   -- {
   --   'sainnhe/gruvbox-material',
   --   lazy = false,
@@ -1041,64 +1100,64 @@ require('lazy').setup({
   --   end,
   -- },
   --
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      local transparent = false -- set to true if you would like to enable transparency
-
-      local bg = '#011628'
-      local bg_dark = '#011423'
-      local bg_highlight = '#143652'
-      local bg_search = '#0A64AC'
-      local bg_visual = '#275378'
-      local fg = '#CBE0F0'
-      local fg_dark = '#B4D0E9'
-      local fg_gutter = '#627E97'
-      local border = '#547998'
-
-      require('tokyonight').setup {
-        style = 'night',
-        transparent = transparent,
-        styles = {
-          sidebars = transparent and 'transparent' or 'dark',
-          floats = transparent and 'transparent' or 'dark',
-        },
-        on_colors = function(colors)
-          colors.bg = bg
-          colors.bg_dark = transparent and colors.none or bg_dark
-          colors.bg_float = transparent and colors.none or bg_dark
-          colors.bg_highlight = bg_highlight
-          colors.bg_popup = bg_dark
-          colors.bg_search = bg_search
-          colors.bg_sidebar = transparent and colors.none or bg_dark
-          colors.bg_statusline = transparent and colors.none or bg_dark
-          colors.bg_visual = bg_visual
-          colors.border = border
-          colors.fg = fg
-          colors.fg_dark = fg_dark
-          colors.fg_float = fg
-          colors.fg_gutter = fg_gutter
-          colors.fg_sidebar = fg_dark
-        end,
-      }
-
-      vim.cmd 'colorscheme tokyonight'
-    end,
-    init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-
-      -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
-    end,
-  },
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   config = function()
+  --     local transparent = false -- set to true if you would like to enable transparency
+  --
+  --     local bg = '#011628'
+  --     local bg_dark = '#011423'
+  --     local bg_highlight = '#143652'
+  --     local bg_search = '#0A64AC'
+  --     local bg_visual = '#275378'
+  --     local fg = '#CBE0F0'
+  --     local fg_dark = '#B4D0E9'
+  --     local fg_gutter = '#627E97'
+  --     local border = '#547998'
+  --
+  --     require('tokyonight').setup {
+  --       style = 'night',
+  --       transparent = transparent,
+  --       styles = {
+  --         sidebars = transparent and 'transparent' or 'dark',
+  --         floats = transparent and 'transparent' or 'dark',
+  --       },
+  --       on_colors = function(colors)
+  --         colors.bg = bg
+  --         colors.bg_dark = transparent and colors.none or bg_dark
+  --         colors.bg_float = transparent and colors.none or bg_dark
+  --         colors.bg_highlight = bg_highlight
+  --         colors.bg_popup = bg_dark
+  --         colors.bg_search = bg_search
+  --         colors.bg_sidebar = transparent and colors.none or bg_dark
+  --         colors.bg_statusline = transparent and colors.none or bg_dark
+  --         colors.bg_visual = bg_visual
+  --         colors.border = border
+  --         colors.fg = fg
+  --         colors.fg_dark = fg_dark
+  --         colors.fg_float = fg
+  --         colors.fg_gutter = fg_gutter
+  --         colors.fg_sidebar = fg_dark
+  --       end,
+  --     }
+  --
+  --     vim.cmd 'colorscheme tokyonight'
+  --   end,
+  --   init = function()
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-night'
+  --
+  --     -- You can configure highlights by doing something like:
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
