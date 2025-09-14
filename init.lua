@@ -710,7 +710,56 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ts_ls = {},
+        ts_ls = {
+          inlayHints = { enable = true },
+          javascript = {
+            inlayHints = {
+              includeInlayEnumMemberValueHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayParameterNameHints = 'all',
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayVariableTypeHints = true,
+            },
+          },
+          typescript = {
+            inlayHints = {
+              includeInlayEnumMemberValueHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayParameterNameHints = 'all',
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayVariableTypeHints = true,
+            },
+          },
+        },
+        -- tsserver = {
+        --   -- taken from https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
+        --   javascript = {
+        --     inlayHints = {
+        --       includeInlayEnumMemberValueHints = true,
+        --       includeInlayFunctionLikeReturnTypeHints = true,
+        --       includeInlayFunctionParameterTypeHints = true,
+        --       includeInlayParameterNameHints = 'all',
+        --       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        --       includeInlayPropertyDeclarationTypeHints = true,
+        --       includeInlayVariableTypeHints = true,
+        --     },
+        --   },
+        --   typescript = {
+        --     inlayHints = {
+        --       includeInlayEnumMemberValueHints = true,
+        --       includeInlayFunctionLikeReturnTypeHints = true,
+        --       includeInlayFunctionParameterTypeHints = true,
+        --       includeInlayParameterNameHints = 'all',
+        --       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        --       includeInlayPropertyDeclarationTypeHints = true,
+        --       includeInlayVariableTypeHints = true,
+        --     },
+        --   },
+        -- },
         --
 
         lua_ls = {
@@ -722,6 +771,7 @@ require('lazy').setup({
               completion = {
                 callSnippet = 'Replace',
               },
+              hint = { enabled = true },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
             },
@@ -902,12 +952,25 @@ require('lazy').setup({
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = 'mono',
+        use_nvim_cmp_as_default = true,
       },
 
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 500,
+          window = {
+            border = 'rounded',
+          },
+        },
+        menu = {
+          auto_show = true,
+          border = 'rounded',
+          winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+          scrollbar = true,
+        },
       },
 
       sources = {
