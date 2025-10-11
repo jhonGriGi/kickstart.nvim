@@ -8,4 +8,4 @@ local rose_pine = require 'custom.plugins.themes.rose-pine'
 local gruvbox = require 'custom.plugins.themes.gruvbox'
 local xcode = require 'custom.plugins.themes.xcode'
 
-return xcode
+return tokyonight
