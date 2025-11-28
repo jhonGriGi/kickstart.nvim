@@ -7,5 +7,8 @@ local dark_modern = require 'custom.plugins.themes.dark_modern'
 local rose_pine = require 'custom.plugins.themes.rose-pine'
 local gruvbox = require 'custom.plugins.themes.gruvbox'
 local xcode = require 'custom.plugins.themes.xcode'
+local darcula = require 'custom.plugins.themes.darcula'
+local ayu = require 'custom.plugins.themes.ayu'
+local dracula = require 'custom.plugins.themes.dracula'
 
-return tokyonight
+return tokyonight_custom

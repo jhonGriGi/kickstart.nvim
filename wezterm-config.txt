@@ -56,8 +56,16 @@ config.keys = {
 }
 
 config.colors = {
-	background = "#1a1b26",
-	tab_bar = {
+	foreground = "#CBE0F0",
+	background = "#011423",
+	cursor_bg = "#47FF9C",
+	cursor_border = "#47FF9C",
+	cursor_fg = "#011423",
+	selection_bg = "#033259",
+	selection_fg = "#CBE0F0",
+	ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
+	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
+    tab_bar = {
 		-- The color of the strip that goes along the top of the window
 		-- (does not apply when fancy tab bar is in use)
 		background = "#0b0022",
@@ -127,51 +135,13 @@ config.colors = {
 			-- The same options that were listed under the active_tab section above
 			-- can also be used for new_tab_hover.
 		},
-	},
+    }
 }
-
--- Esquema de color
-config.color_scheme = 'Tokyo Night'
 
 -- 🧩 Configuración de fuentes (basada en tu ejemplo de Kitty)
-config.font = wezterm.font_with_fallback({
-  "FiraCode Nerd Font",
-})
+config.font = wezterm.font("MesloLGS Nerd Font Mono")
 
-config.font_rules = {
-  -- Negrita
-  {
-    intensity = "Bold",
-    italic = false,
-    font = wezterm.font({
-      family = "FiraCode Nerd Font",
-      weight = "Bold",
-    }),
-  },
-  -- Cursiva
-  {
-    intensity = "Normal",
-    italic = true,
-    font = wezterm.font({
-      family = "VictorMono Nerd Font",
-      weight = "Light",
-      style = "Italic",
-    }),
-  },
-  -- Negrita + Cursiva
-  {
-    intensity = "Bold",
-    italic = true,
-    font = wezterm.font({
-      family = "VictorMono Nerd Font",
-      weight = "Bold",
-      style = "Italic",
-    }),
-  },
-}
-
-config.font_size = 16
-config.line_height = 1.4
+config.font_size = 19
 
 -- Ventana
 config.enable_tab_bar = true
