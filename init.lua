@@ -237,14 +237,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.diagnostic.config {
-  virtual_text = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
-}
-
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -512,7 +504,7 @@ require('lazy').setup({
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'williamboman/mason.nvim', opts = {} },
+      { 'williamboman/mason.nvim', version = 'stable', opts = {} },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -701,83 +693,102 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
+        -- TypeScript / JavaScript
         ts_ls = {
-          inlayHints = { enable = true },
-          javascript = {
-            inlayHints = {
-              includeInlayEnumMemberValueHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayParameterNameHints = 'all',
-              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayVariableTypeHints = true,
+          settings = {
+            javascript = {
+              inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+              },
             },
-          },
-          typescript = {
-            inlayHints = {
-              includeInlayEnumMemberValueHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayParameterNameHints = 'all',
-              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayVariableTypeHints = true,
+            typescript = {
+              inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+              },
             },
           },
         },
-        -- tsserver = {
-        --   -- taken from https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
-        --   javascript = {
-        --     inlayHints = {
-        --       includeInlayEnumMemberValueHints = true,
-        --       includeInlayFunctionLikeReturnTypeHints = true,
-        --       includeInlayFunctionParameterTypeHints = true,
-        --       includeInlayParameterNameHints = 'all',
-        --       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-        --       includeInlayPropertyDeclarationTypeHints = true,
-        --       includeInlayVariableTypeHints = true,
-        --     },
-        --   },
-        --   typescript = {
-        --     inlayHints = {
-        --       includeInlayEnumMemberValueHints = true,
-        --       includeInlayFunctionLikeReturnTypeHints = true,
-        --       includeInlayFunctionParameterTypeHints = true,
-        --       includeInlayParameterNameHints = 'all',
-        --       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-        --       includeInlayPropertyDeclarationTypeHints = true,
-        --       includeInlayVariableTypeHints = true,
-        --     },
-        --   },
-        -- },
-        --
 
+        -- Angular
+        angularls = {},
+
+        -- HTML
+        html = {},
+
+        -- CSS
+        cssls = {},
+        tailwindcss = {},
+
+        -- YAML
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = { enable = true, url = 'https://www.schemastore.org/api/json/catalog.json' },
+              validate = true,
+              hover = true,
+              completion = true,
+            },
+          },
+        },
+
+        -- Terraform
+        terraformls = {},
+        tflint = {},
+
+        -- Python
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = 'basic',
+                inlayHints = {
+                  variableTypes = true,
+                  functionReturnTypes = true,
+                },
+              },
+            },
+          },
+        },
+
+        -- Lua
         lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
           settings = {
             Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
+              completion = { callSnippet = 'Replace' },
               hint = { enabled = true },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
+
+        -- Go
+        gopls = {
+          settings = {
+            gopls = {
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+            },
+          },
+        },
+
+        clangd = {},
+        sqlls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -795,23 +806,20 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers)
       local extra_servers = {
-        'css-lsp',
-        'css-variables-language-server',
-        'cssmodules-language-server',
-        'eslint-lsp',
-        'html-lsp',
-        'lua-language-server',
-        'prettier',
-        'stylelint',
-        'stylelint-lsp',
-        'stylua',
-        'typescript-language-server',
-        'clangd',
-        'golangci-lint',
-        'gopls',
+        -- Formatters
+        'prettier',       -- JS/TS/HTML/CSS/YAML/Markdown
+        'stylua',         -- Lua
+        'black',          -- Python
+        'isort',          -- Python imports
+        'sql-formatter',  -- SQL
+        -- Linters
+        'eslint-lsp',         -- JS/TS/Angular
+        'stylelint',          -- CSS
+        'golangci-lint',      -- Go
         'golangci-lint-langserver',
-        'sqls',
-        'sql-formatter',
+        'tflint',             -- Terraform (linter, mason name)
+        'yamllint',           -- YAML
+        'markdownlint',       -- Markdown
       }
       vim.list_extend(ensure_installed, extra_servers)
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -990,7 +998,7 @@ require('lazy').setup({
       -- the rust implementation via `'prefer_rust_with_warning'`
       --
       -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
@@ -1000,13 +1008,7 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  {
-    'ray-x/lsp_signature.nvim',
-    event = 'InsertEnter',
-    opts = {
-      -- cfg options
-    },
-  },
+
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
