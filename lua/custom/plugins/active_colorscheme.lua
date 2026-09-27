@@ -11,4 +11,4 @@ local darcula = require 'custom.plugins.themes.darcula'
 local ayu = require 'custom.plugins.themes.ayu'
 local dracula = require 'custom.plugins.themes.dracula'
 
-return tokyonight_custom
+return darcula

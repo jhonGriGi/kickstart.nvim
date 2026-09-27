@@ -120,6 +120,7 @@ end)
 
 -- Enable break indent
 vim.opt.colorcolumn = '80'
+vim.api.nvim_set_hl(0, 'CharColumn', { fg = '#3b4252', ctermfg = 'Grey' })
 vim.opt.breakindent = true
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
