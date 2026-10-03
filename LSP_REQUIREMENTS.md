@@ -71,7 +71,7 @@ Al abrir nvim por primera vez, Mason descarga e instala todo esto sin intervenci
 
 **LSP Servers:**
 `ts_ls`, `angularls`, `html`, `cssls`, `tailwindcss`, `yamlls`, `terraformls`,
-`tflint`, `pyright`, `lua_ls`, `gopls`, `clangd`, `sqlls`
+`tflint`, `pyright`, `lua_ls`, `gopls`, `clangd`, `sqlls`, `kotlin_language_server`
 
 **Formatters:**
 `prettier`, `stylua`, `black`, `isort`, `sql-formatter`
@@ -116,3 +116,4 @@ nvim
 - **`angularls`**: funciona globalmente con la instalación de pnpm; proyectos con `@angular/language-server` local tienen prioridad
 - **`sqlls`**: Mason lo instala vía Go, requiere `go` en el sistema
 - **`tflint`**: Mason lo instala automáticamente, no requiere instalación manual adicional
+- **`kotlin_language_server`**: cubre `.gradle.kts` y `.gradle` — no requiere Java, Mason lo instala como binario precompilado

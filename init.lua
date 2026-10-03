@@ -789,6 +789,9 @@ require('lazy').setup({
 
         clangd = {},
         sqlls = {},
+
+        -- Gradle (.gradle.kts)
+        kotlin_language_server = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -1052,7 +1055,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'typescript', 'javascript' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'typescript', 'javascript', 'groovy', 'kotlin' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
